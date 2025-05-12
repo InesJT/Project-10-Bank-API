@@ -137,12 +137,12 @@ paths:
           schema:
             $ref: '#/definitions/AccountsList'
   
-  /accounts/transactions/current-month:
+  /transactions/current-month:
     get:
       security:
         - Bearer: []
       tags:
-        - Accounts Module
+        - Transactions Module
       summary: Get accounts transactions for the current month
       description: Retrieves current month transactions for all accounts of the user
       parameters:
