@@ -140,6 +140,8 @@ paths:
           description: Not authorized
         '404':
           description: Transaction not found
+        "500":
+          description: Internal Server Error
   
   /transactions/current-month:
     get:
@@ -162,8 +164,6 @@ paths:
             $ref: '#/definitions/TransactionsList'
         '401':
           description: Not authorized
-        '403':
-          description: Forbidden
         '500':
           description: Internal Server Error
  
@@ -229,6 +229,8 @@ paths:
           description: Not authorized
         '404':
           description: Transaction not found
+        "500":
+          description: Internal Server Error
 
 securityDefinitions:
   Bearer:
