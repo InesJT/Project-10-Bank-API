@@ -136,6 +136,10 @@ paths:
           description: Accounts list
           schema:
             $ref: '#/definitions/AccountsList'
+        '401':
+          description: Not authorized
+        '404':
+          description: Transaction not found
   
   /transactions/current-month:
     get:
@@ -155,9 +159,11 @@ paths:
         '200':
           description: Accounts list with their corresponding transactions
           schema:
-            $ref: '#/definitions/FullAccountsList'
-        '403':
+            $ref: '#/definitions/TransactionsList'
+        '401':
           description: Not authorized
+        '403':
+          description: Forbidden
         '500':
           description: Internal Server Error
  
@@ -185,10 +191,10 @@ paths:
           description: Transaction details
           schema:
             $ref: '#/definitions/TransactionDetails'
+        '401':
+          description: Not authorized
         '404':
           description: Transaction not found
-        '403':
-          description: Not authorized
         "500":
           description: Internal Server Error
 
@@ -219,8 +225,8 @@ paths:
       responses:
         '200':
           description: Update transaction fields
-        '403':
-          description: Not authorized to modify
+        '401':
+          description: Not authorized
         '404':
           description: Transaction not found
 
@@ -291,14 +297,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SimpleAccount'
-  
-  FullAccountsList:
-    type: object
-    properties:
-      accounts:
-        type: array
-        items:
-          $ref: '#/definitions/FullAccount'
 
   SimpleAccount:
     type: object
@@ -313,24 +311,6 @@ definitions:
       accountType:
         type: string
         enum: [savings, credit, checking]
-
-  FullAccount:
-    type: object
-    properties:
-      id:
-        type: string
-      title:
-        type: string
-      balance:
-        type: number
-        format: double
-      accountType:
-        type: string
-        enum: [savings, credit, checking]
-      transactions:
-        type: array
-        items:
-          $ref: '#/definitions/Transaction'
 
   TransactionsList:
     type: object
@@ -356,6 +336,8 @@ definitions:
       category:
         type: string
         enum: [Food, Shopping, Transfer, Salary, Other]
+      notes:
+        type: string
 
   TransactionDetails:
     allOf:
@@ -382,23 +364,6 @@ definitions:
       date:
         type: string
         format: date
-      category:
-        type: string
-        enum: [Food, Shopping, Transfer, Salary, Other]
-      notes:
-        type: string
-  
-  UpdateTransaction:
-    type: object
-    required:
-      - amount
-      - description
-    properties:
-      amount:
-        type: number
-        format: double
-      description:
-        type: string
       category:
         type: string
         enum: [Food, Shopping, Transfer, Salary, Other]
